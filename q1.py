@@ -37,8 +37,15 @@ def mandel(
     z = c
     for iteration in range(n):
         z = z ** 2 + c
-    return point_df.assign(in_set=abs(z) < thresh)
+        point_df['in_set'] = point_df['y'].apply(lambda z: 1 if abs(z) < thresh else z)
+    return point_df
+
 
 
 if __name__ == '__main__':
-    print(mandel(45))
+    data = mandel(45)
+    print(data)
+
+    plt.imshow(data, extent=[-2, 1, -1.5, 1.5])
+    plt.gray()
+    plt.show()
