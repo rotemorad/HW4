@@ -29,15 +29,16 @@ def mandel(
     img : np.ndarray
         A binary image with a value of 1 if the point belongs to the set.
         The shape of the resulting image is (nx, ny).
+
     """
-    x_series = pd.Series(np.random.randint(xlims.min(), xlims.max(), nx))
-    y_series = pd.Series(np.random.randint(ylims.min(), ylims.max(), ny))
-    c = pd.Series(x_series + 1j * y_series)
+    point_df = pd.DataFrame(
+        {'x': np.linspace(xlims.min(), xlims.max(), nx), 'y': np.linspace(ylims.min(), ylims.max(), ny)})
+    c = pd.Series(point_df['x'] + 1j * point_df['y'])
     z = c
     for iteration in range(n):
         z = z ** 2 + c
-    return pd.DataFrame({'x': x_series, 'y': y_series, 'in_set':(abs(z) < thresh)})
+    return point_df.assign(in_set=abs(z) < thresh)
 
 
 if __name__ == '__main__':
-    plt.imshow(mandel(20), )
+    print(mandel(45))
