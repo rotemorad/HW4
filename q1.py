@@ -33,19 +33,21 @@ def mandel(
     """
     point_df = pd.DataFrame(
         {'x': np.linspace(xlims.min(), xlims.max(), nx), 'y': np.linspace(ylims.min(), ylims.max(), ny)})
-    c = pd.Series(point_df['x'] + 1j * point_df['y'])
+    # complex numbers creation
+    c = point_df['x'][:, np.newaxis] + 1j * point_df['y'][np.newaxis, :]
+    # Mandelbrot iteration
     z = c
-    for iteration in range(n):
+    while n > 0:
+        n -= 1
         z = z ** 2 + c
-        point_df['in_set'] = point_df['y'].apply(lambda z: 1 if abs(z) < thresh else z)
-    return point_df
 
+        not_mandel = abs(z) > thresh
+        # Avoid overflow by preventing it from running off to infinity
+        z[not_mandel] = thresh
+    return abs(z) < thresh
 
 
 if __name__ == '__main__':
-    data = mandel(45)
-    print(data)
-
-    plt.imshow(data, extent=[-2, 1, -1.5, 1.5])
-    plt.gray()
+    data = mandel(50).T
+    plt.imshow(data, extent=[-2, 1, -1.5, 1.5], cmap='gray')
     plt.show()
