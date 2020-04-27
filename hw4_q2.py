@@ -71,6 +71,7 @@ def mean_animals(fname: pathlib.Path) -> pd.DataFrame:
     data = read_data(fname)
     data.pop('# year')
     data = data.assign(mean_animals=data.mean(1))
+    #  ToDo fix mean normalization
     data['mean_animals'] = (data['mean_animals'] - data['mean_animals'].min()) / (
             data['mean_animals'].max() - data['mean_animals'].min())
     return data
