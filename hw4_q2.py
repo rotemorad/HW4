@@ -71,13 +71,6 @@ def mean_animals(fname: pathlib.Path) -> pd.DataFrame:
     data = read_data(fname)
     data.pop('# year')
     data = data.assign(mean_animals=data.mean(1))
-    #  ToDo fix mean normalization
-    data['mean_animals'] = (data['mean_animals'] - data['mean_animals'].min()) / (
-            data['mean_animals'].max() - data['mean_animals'].min())
+    # FYI, normalizing the mean should be done with (df['mean] - df['mean'].min())/ (df['mean'].max - df['mean'].min())
+    data['mean_animals'] = (data['mean_animals'] / data['mean_animals'].max())
     return data
-
-
-if __name__ == '__main__':
-    print(largest_species(fname))
-    print(lynxes_when_hares(fname))
-    print(mean_animals(fname))
