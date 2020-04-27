@@ -45,7 +45,6 @@ def parking_borough(fname: pathlib.Path) -> str:
     data = read_data(fname)
     data = data.filter(items=['City', 'Complaint Type', 'Park Borough'])
     filtered = data[data['Complaint Type'] == 'Illegal Parking']
-    # filtered = filtered[filtered['City'] == 'NEW YORK']
     boroughs = pd.Series(filtered['Park Borough'].value_counts())
     return str(boroughs.idxmax())
 
