@@ -7,8 +7,7 @@ def read_data(fname: pathlib.Path) -> pd.DataFrame:
     file = pathlib.Path(str(fname))
     if not file.exists():
         raise ValueError(f"File {file} doesn't exist.")
-    data = pd.read_table(file)
-    return data
+    return pd.read_table(file)
 
 
 def largest_species(fname: pathlib.Path) -> pd.Series:
