@@ -2,8 +2,6 @@ import pathlib
 
 import pandas as pd
 
-fname = "populations.txt"
-
 
 def read_data(fname: pathlib.Path) -> pd.DataFrame:
     file = pathlib.Path(str(fname))
