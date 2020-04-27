@@ -6,7 +6,7 @@ import pandas as pd
 def read_data(fname: pathlib.Path) -> pd.DataFrame:
     file = pathlib.Path(str(fname))
     if not file.exists():
-        raise ValueError(f"File {file} doesn't exist.")
+        raise FileNotFoundError(f"File {file} doesn't exist.")
     return pd.read_table(file)
 
 
@@ -68,6 +68,6 @@ def mean_animals(fname: pathlib.Path) -> pd.DataFrame:
     data = read_data(fname)
     data.pop('# year')
     data = data.assign(mean_animals=data.mean(1))
-    # FYI, normalizing the mean should be done with (df['mean] - df['mean'].min())/ (df['mean'].max - df['mean'].min())
-    data['mean_animals'] = (data['mean_animals'] / data['mean_animals'].max())
+    data['mean_animals'] = (data['mean_animals'] - data['mean_animals'].min()) / (
+            data['mean_animals'].max() - data['mean_animals'].min())
     return data

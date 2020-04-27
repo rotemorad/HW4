@@ -47,7 +47,11 @@ def mandel(
     return abs(z) < thresh
 
 
-if __name__ == '__main__':
+def main():
     data = mandel(50).T
     plt.imshow(data, extent=[-2, 1, -1.5, 1.5], cmap='gray')
     plt.show()
+
+
+if __name__ == '__main__':
+    main()
