@@ -6,7 +6,7 @@ import pandas as pd
 def read_data(fname: pathlib.Path) -> pd.DataFrame:
     file = pathlib.Path(str(fname))
     if not file.exists():
-        raise FileNotFoundError(f"File {file} doesn't exist.")
+        raise ValueError(f"File {file} doesn't exist.")
     return pd.read_table(file)
 
 
